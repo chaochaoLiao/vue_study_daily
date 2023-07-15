@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 400px;
+            padding: 50px;
+            margin: 50px;
+            border: 2px solid #bfa;
+            border-radius: 10px;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+        h2{
+            margin: 10px 0 20px 0;
+        }
+        p{margin: 50px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="box">
+            <h2>向前自助售货机</h2>
+            <button @click="buy(5)">可乐5元</button>
+            <button @click="buy(10)">咖啡10元</button>
+        </div>
+        <p>银行卡的余额是：{{money}}</p>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:"#app",
+            data:{
+               money:999
+            },
+            methods:{
+                buy(price){
+                this.money = this.money-price
+                }
+            }
+        })
+    </script>
+</body>
+</html>

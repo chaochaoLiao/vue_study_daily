@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <img :src="img" alt="">
+        <!-- 在属性前加:等价于v-bind -->
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+               img:"./img01.jpg"
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-if="name===1">周仅仅</p>
+        <p v-else>周金金</p>
+        <hr>
+        <p v-if="score>=90">奖励你吃蛋炒饭</p>
+        <p v-else-if="score>=80 && score<90">奖励你吃大西瓜</p>
+        <p v-else-if="score<80 && score>=60">奖励你玩一天游戏</p>
+        <p v-else>惩罚你一周不能出门玩</p>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                name:1,
+                score:0
+            }
+        })
+    </script>
+</body>
+</html>

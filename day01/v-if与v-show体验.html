@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 200px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            margin: 10px;
+            border:3px solid #bfa ;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px 2px #999 ;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="box" v-show="flag">我是展示v-show的盒子</div>
+        <div class="box" v-if="flag">我是展示v-if的盒子</div>
+        <!-- v-show的底层逻辑是改变display的值
+        v-if的底层逻辑是增删元素
+        所以v-show适用于频繁改变状态的情况下使用 -->
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+               flag:true
+            }
+        })
+    </script>
+</body>
+</html>
