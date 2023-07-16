@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #999;
+        }
+
+        .box2 {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #999;
+            background-color: #bfa;
+        }
+        .box3 {
+            width: 300px;
+            height: 200px;
+            border: 2px solid #999;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box"  :class="{box2:true , box3:true}">我是一个盒子</div>
+        <div class="box" :class="['box2','box3']">我是第二个盒子</div>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{}
+        })
+    </script>
+</body>
+
+</html>
