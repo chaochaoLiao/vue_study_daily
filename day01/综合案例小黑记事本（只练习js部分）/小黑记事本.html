@@ -20,7 +20,7 @@
   <!-- 列表区域 -->
   <section class="main">
     <ul class="todo-list">
-      <li class="todo" v-for="(item,index) in this.list" :key="item.id">
+      <li class="todo" v-for="(item,index) in list" :key="item.id">
         <div class="view">
           <span class="index">{{index+1}}.</span> <label>{{item.todo}}</label>
           <button class="destroy" @click="clear(item.id)"></button>
