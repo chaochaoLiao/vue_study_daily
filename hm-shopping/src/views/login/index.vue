@@ -21,20 +21,20 @@
           <img v-if="picUrl" :src="picUrl" @click="getPicCode" alt="">
         </div>
         <div class="form-item">
-          <input  class="inp" placeholder="请输入短信验证码" type="text">
+          <input  v-model="smsCode" class="inp" placeholder="请输入短信验证码" type="text">
           <button @click="getCode" >
              {{ totalsecond === second ? '获取验证码' : second + '秒后重新获取'}}
           </button>
         </div>
       </div>
 
-      <div  class="login-btn">登录</div>
+      <div @click="login" class="login-btn">登录</div>
     </div>
     </div>
  </template>
 
 <script>
-import { getPicCode, getMsgCode } from '@/api/login'
+import { getPicCode, getMsgCode, codeLogin } from '@/api/login'
 
 export default {
   name: 'loginIndex',
@@ -52,7 +52,8 @@ export default {
       picUrl: '',
       totalsecond: 60,
       second: 60,
-      timer: null
+      timer: null,
+      smsCode: ''
 
     }
   },
@@ -80,6 +81,7 @@ export default {
         }
 
         await getMsgCode(this.picCode, this.picKey, this.phone)
+
         this.$toast('短信验证码请求发送成功')
 
         this.timer = setInterval(() => {
@@ -91,6 +93,20 @@ export default {
           }
         }, 1000)
       }
+    },
+    async login () {
+      if (!this.vaildFn()) {
+        return
+      }
+      if (!/^\d{6}$/.test(this.smsCode)) {
+        this.$toast('请输入正确的短信验证码')
+        return
+      }
+      const res = await codeLogin(this.phone, this.smsCode)
+      console.log(res)
+      this.$store.commit('user/setUserInfo', res.data)
+      this.$toast('登录成功')
+      this.$router.push('/')
     }
   }
 }
