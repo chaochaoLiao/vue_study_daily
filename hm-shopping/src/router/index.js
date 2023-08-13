@@ -32,7 +32,7 @@ const routes = [
   },
   { path: '/myorder', component: MyOrder },
   { path: '/pay', component: Pay },
-  { path: '/prodetail:id', component: Prodetail },
+  { path: '/prodetail/:id', component: Prodetail },
   { path: '/search', component: Search },
   { path: '/searchList', component: SearchList }
 ]
