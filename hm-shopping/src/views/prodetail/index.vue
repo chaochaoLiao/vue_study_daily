@@ -64,18 +64,19 @@
 <div class="desc" v-html="detail.content"></div>
 
     <!-- 底部 -->
-    <div class="footer">
-      <div class="icon-home">
-        <van-icon name="wap-home-o" />
-        <span>首页</span>
-      </div>
-      <div class="icon-cart">
-        <van-icon name="shopping-cart-o" />
-        <span>购物车</span>
-      </div>
+<div class="footer">
+  <div class="icon-home">
+    <van-icon name="wap-home-o" />
+    <span>首页</span>
+  </div>
+  <div class="icon-cart">
+    <span v-if="cartTotal > 0" class="num">{{ cartTotal }}</span>
+    <van-icon name="shopping-cart-o" />
+   <span>购物车</span>
+  </div>
       <div class="btn-add" @click="addFn">加入购物车</div>
       <div class="btn-buy" @click="buyFn">立刻购买</div>
-    </div>
+</div>
 
 <van-action-sheet v-model="showPannel" :title="mode === 'cart' ? '加入购物车' : '立刻购买'">
   <div class="product">
@@ -99,7 +100,7 @@
       <CountBox v-model="addCount"></CountBox>
     </div>
     <div class="showbtn" v-if="detail.stock_total > 0">
-      <div class="btn" v-if="mode === 'cart'">加入购物车</div>
+      <div class="btn" v-if="mode === 'cart'" @click="addCart">加入购物车</div>
       <div class="btn now" v-if="mode === 'buyNow'">立刻购买</div>
     </div>
     <div class="btn-none" v-else>该商品已抢完</div>
@@ -112,6 +113,7 @@
 import { getProDetail, getProComments } from '@/api/product'
 import defaultImg from '@/assets/default-avatar.png'
 import CountBox from '@/components/CountBox.vue'
+import { addCart } from '@/api/cart'
 export default {
   name: 'ProDetail',
   components: {
@@ -127,7 +129,8 @@ export default {
       defaultImg,
       mode: 'cart',
       showPannel: false,
-      addCount: 1
+      addCount: 1,
+      cartTotal: 0
     }
   },
   computed: {
@@ -161,6 +164,31 @@ export default {
     buyFn () {
       this.mode = 'buyNow'
       this.showPannel = true
+    },
+    async addCart () {
+      // 判断用户是否有登录
+      if (!this.$store.getters.token) {
+        this.$dialog.confirm({
+          title: '温馨提示',
+          message: '此时需要先登录才能继续操作哦',
+          confirmButtonText: '去登录',
+          cancelButtonText: '再逛逛'
+        })
+          .then(() => {
+            this.$router.replace({
+              path: '/login',
+              query: {
+                backUrl: this.$route.fullPath
+              }
+            })
+          })
+          .catch(() => {})
+        return
+      }
+      const { data } = await addCart(this.goodsId, this.addCount, this.detail.skuList[0].goods_sku_id)
+      this.cartTotal = data.cartTotal
+      this.$toast('加入购物车成功')
+      this.showPannel = false
     }
   }
 
@@ -359,6 +387,22 @@ export default {
   }
   .btn-none {
     background-color: #cccccc;
+  }
+}
+.footer .icon-cart {
+  position: relative;
+  padding: 0 6px;
+  .num {
+    z-index: 999;
+    position: absolute;
+    top: -2px;
+    right: 0;
+    min-width: 16px;
+    padding: 0 4px;
+    color: #fff;
+    text-align: center;
+    background-color: #ee0a24;
+    border-radius: 50%;
   }
 }
 </style>

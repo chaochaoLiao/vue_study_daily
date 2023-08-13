@@ -41,7 +41,7 @@ const router = new VueRouter({
   routes
 })
 
-const authUrls = ['/pay', 'myorder']
+const authUrls = ['/pay', '/myorder']
 router.beforeEach((to, from, next) => {
   if (!authUrls.includes(to.path)) {
     next()
